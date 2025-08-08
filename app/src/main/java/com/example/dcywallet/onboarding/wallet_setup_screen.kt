@@ -17,12 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.dcywallet.R
+import com.example.dcywallet.auth.ImportAuthViewModel
+import com.example.dcywallet.auth.ImportWalletScreen
 import com.example.dcywallet.utils.common.styles.gradientBrush
+import com.example.dcywallet.utils.common.widgets.CustomGeneralButton
+import com.example.dcywallet.utils.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,41 +48,23 @@ fun WalletSetupScreen(navController: NavHostController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Button(
-                        onClick = { /*TODO*/ },
-                        Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(
-                                id = R.color.gray21
-                            )
-                        ),
-                        shape = RoundedCornerShape(corner = CornerSize(80.dp))
-                    ) {
-                        Text(
-                            text = "Import Using Seed Phrase",
-                            //Modifier.padding(vertical = 12.dp),
-                            fontSize = 16.sp
-                        )
+                    CustomGeneralButton(text = "Import Using Seed Phrase") {
+                        navController.navigate(route = Screens.WalletSetup.route) {
+                            popUpTo(0)
+                        }
                     }
                     Box(modifier = Modifier.height(16.dp))
-                    Button(
-                        onClick = { /*TODO*/ },
-                        Modifier
+
+                    CustomGeneralButton(
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .height(56.dp)
                             .background(gradientBrush, shape = RoundedCornerShape(80.dp)),
+                        text = "Create a new wallet",
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent
                         ),
-                        shape = RoundedCornerShape(corner = CornerSize(80.dp))
                     ) {
-                        Text(
-                            text = "Create a new wallet",
-                            Modifier.padding(vertical = 12.dp),
-                            fontSize = 16.sp
-                        )
+
                     }
                 }
 
@@ -91,4 +79,11 @@ fun WalletSetupScreen(navController: NavHostController) {
 
     }
 
+}
+
+@Preview
+@Composable
+fun NewPreview() {
+    val context = LocalContext.current.applicationContext
+    WalletSetupScreen(navController = NavHostController(context))
 }

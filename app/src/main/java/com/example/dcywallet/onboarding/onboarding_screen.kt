@@ -30,15 +30,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.dcywallet.R
 import com.example.dcywallet.utils.common.styles.gradientBrush
+import com.example.dcywallet.utils.common.widgets.CustomGeneralButton
 import com.example.dcywallet.utils.navigation.Screens
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -85,28 +88,11 @@ fun OnBoardingScreen(navController: NavHostController) {
                         }
                     }
                     Box(modifier = Modifier.height(24.dp))
-                    Button(
-                        onClick = {
-                            navController.navigate(route = Screens.WalletSetup.route) {
-                                popUpTo(0)
-                            }
-                        },
-                        Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(
-                                id = R.color.gray21
-                            )
-                        ),
-                        shape = RoundedCornerShape(corner = CornerSize(80.dp))
-                    ) {
-                        Text(
-                            text = "Get started",
-                            //Modifier.padding(vertical = 12.dp),
-                            fontSize = 16.sp
-                        )
+                    CustomGeneralButton(text = "Get started") {
+                        navController.navigate(route = Screens.WalletSetup.route) {
+                            popUpTo(0)}
                     }
+
                 }
 
             }
@@ -126,11 +112,12 @@ fun OnBoardingScreen(navController: NavHostController) {
 
 }
 
-//@Preview
-//@Composable
-//fun OnboardingPreview() {
-//    OnBoardingScreen()
-//}
+@Preview
+@Composable
+fun OnboardingPreview() {
+    val context = LocalContext.current.applicationContext
+    OnBoardingScreen(navController = NavHostController(context))
+}
 
 @Composable
 fun OnboardView(innerPadding: PaddingValues, onBoardingModel: OnBoardingModel) {
